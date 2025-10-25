@@ -1,13 +1,14 @@
 import { useState , useEffect, ReactEventHandler} from "react";
 
-
-interface note {
+interface Note {
+    id: string;
     title: string;
-    content: string
-    id: string
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-export default function SpotlightModal({ notes,  onClose }: {notes: note[], onClose: () => void}) {
+export default function SpotlightModal({ notes, onClose, onNoteSelect }: {notes: Note[], onClose: () => void, onNoteSelect?: (note: Note) => void}) {
   const [query, setQuery] = useState("");
 
   // Filter notes by title/content
@@ -69,7 +70,7 @@ export default function SpotlightModal({ notes,  onClose }: {notes: note[], onCl
             <div
               key={note.id}
               className="group p-4 mb-2 rounded-xl bg-white/70 dark:bg-neutral-800/70 border border-transparent hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer transition-all duration-150 shadow-sm"
-              // onClick={() => { /* handle note selection */ }}
+              onClick={() => onNoteSelect?.(note)}
               tabIndex={0}
               role="button"
               aria-label={`Select note: ${note.title}`}
@@ -77,9 +78,7 @@ export default function SpotlightModal({ notes,  onClose }: {notes: note[], onCl
               <div className="font-bold text-lg text-neutral-800 dark:text-neutral-100 group-hover:text-blue-700 truncate">
                 {note.title}
               </div>
-              <div className="text-sm text-neutral-500 dark:text-neutral-400 mt-1 truncate">
-                {note.content}
-              </div>
+             
             </div>
           ))}
         </div>

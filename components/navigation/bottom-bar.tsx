@@ -1,6 +1,6 @@
 import { Plus, Star, Trash } from "lucide-react"
 
-export default function BottomBar  () {
+export default function BottomBar  ({onAddNote, onFavoriteNote, onDeleteNote}: {onAddNote: () => void, onFavoriteNote: () => void, onDeleteNote: () => void}) {
 
 
 
@@ -9,6 +9,7 @@ export default function BottomBar  () {
             <button
                 className=" group p-2 rounded hover:bg-neutral-100  dark:hover:bg-neutral-800 transition-colors"
                 aria-label="Add"
+                onClick={onAddNote}
             >
                 <Plus className="w-5 h-5 text-black group-hover:text-white" />
             </button>

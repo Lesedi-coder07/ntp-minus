@@ -5,44 +5,63 @@ import { Check } from "lucide-react"
 import BottomBar from "@/components/navigation/bottom-bar"
 import SpotlightModal from "@/components/navigation/modal"
 import { useEffect } from "react"
-
-const notes = [
-  {
-    id: "1",
-    title: "Meeting Notes",
-    content: "Discussed project milestones and assigned tasks to the team."
-  },
-  {
-    id: "2",
-    title: "Shopping List",
-    content: "Eggs, milk, bread, and coffee."
-  },
-  {
-    id: "3",
-    title: "Pressure",
-    content: "Explore multpiurbgeeopgje dsuibf ribefonsdarch features."
-  },
-
-  {
-    id: "4",
-    title: "Ideas",
-    content: "Efnsfs-powered note suggestions fsdfsouidnfs foerfsdn quick search features."
-  },
-  {
-    id: "5",
-    title: "Physics",
-    content: "Explore AI-powered note suggestions and quick search features."
-  } ,{
-    id: "6",
-    title: "Computer Science",
-    content: "Explore AI-powered note suggestions and quick search features."
-  }
-]
+import { notesStorage, Note } from "./storage/notes"
 
 export default function Home () {
  let [updatingTitle, setUpdatingTitle] = useState<boolean>(false)
- let [title, setTitle] = useState<string>("New Note")
+ let [title, setTitle] = useState<string>("New Note");
  const [showSearchModal, setShowSearchModal] = useState(false);
+ const [currentNote, setCurrentNote] = useState<Note | null>(null);
+ const [notes, setNotes] = useState<Note[]>([]);
+
+ // Initialize notes and current note from localStorage
+ useEffect(() => {
+   const loadNotes = () => {
+     const allNotes = notesStorage.getAll();
+     setNotes(allNotes);
+     
+     // Get current note or create a new one if none exists
+     let current = notesStorage.getCurrentNote();
+     if (!current && allNotes.length > 0) {
+       current = allNotes[0];
+       notesStorage.setCurrentNoteId(current.id);
+     } else if (!current) {
+       current = notesStorage.createNew();
+     }
+     
+     setCurrentNote(current);
+     setTitle(current.title);
+   };
+
+   loadNotes();
+ }, []);
+
+ // Update current note when title changes
+ useEffect(() => {
+   if (currentNote) {
+     notesStorage.updateTitle(currentNote.id, title);
+     const updatedNote = { ...currentNote, title, updatedAt: new Date() };
+     setCurrentNote(updatedNote);
+     setNotes(prev => prev.map(note => note.id === currentNote.id ? updatedNote : note));
+   }
+ }, [title, currentNote]);
+
+ useEffect(()=> {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (  e.key === "v" && (e.metaKey)) {
+        e.preventDefault();
+        toggleUpdateTitle();
+      }
+      
+      if (e.key === "Enter" && updatingTitle) {
+        e.preventDefault();
+        toggleUpdateTitle();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown)
+ },[updatingTitle])
 
 
  const toggleUpdateTitle = () => {
@@ -51,9 +70,25 @@ export default function Home () {
 const ChangeTitle = (e: React.ChangeEvent<HTMLInputElement >) => {
  let input = e.currentTarget
  setTitle(input.value)
-
-
 }
+
+// Handle note selection from search modal
+const handleNoteSelect = (note: Note) => {
+  setCurrentNote(note);
+  setTitle(note.title);
+  notesStorage.setCurrentNoteId(note.id);
+  setShowSearchModal(false);
+};
+
+// Handle creating a new note
+const handleNewNote = () => {
+  const newNote = notesStorage.createNew();
+  setCurrentNote(newNote);
+  setTitle(newNote.title);
+  setNotes(prev => [...prev, newNote]);
+};
+
+   
 
   // Add keyboard shortcut: Alt+S (Windows/Linux) or Option+S (Mac) to open Spotlight
   // Attach effect to listen for keydown
@@ -81,25 +116,26 @@ const ChangeTitle = (e: React.ChangeEvent<HTMLInputElement >) => {
 <div className="w-full flex justify-center items-center fixed top-7 left-0 z-40 pointer-events-none">
   <button
     onClick={() => setShowSearchModal(true)}
-    className="pointer-events-auto flex items-center gap-2 px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-300"
+    className="pointer-events-auto flex items-center gap-2 px-6 py-2 rounded-full  text-black font-semibold transition-all duration-150 "
     aria-label="Open search"
     style={{ minWidth: "140px" }}
   >
   
-    <span className="hidden sm:inline">⌘ + K  Search</span>
-    <span className="inline sm:hidden">🔍</span>
+    <span className="hidden sm:inline">⌘ + K </span>  
+   
   </button>
 </div>
 {showSearchModal && (
   <SpotlightModal
     notes={notes}
     onClose={() => setShowSearchModal(false)}
+    onNoteSelect={handleNoteSelect}
   />
 )}
 
 <div className="flex flex-row justify-center mt-12">
   
-  <div className="flex-3 text-black max-w-[80%] mt-8 bg-white/80 rounded-xl shadow-lg p-8 min-h-[80vh] mx-auto transition-all duration-200">
+  <div className="flex-3 text-black max-w-[80%] mt-8 bg-white/80 rounded-xl  p-8 min-h-[120vh] mx-auto transition-all duration-200">
     {!updatingTitle ? (
       <div
         className="mt-2 pt-1 cursor-pointer group flex items-center gap-2"
@@ -109,35 +145,43 @@ const ChangeTitle = (e: React.ChangeEvent<HTMLInputElement >) => {
         <h1 className="text-4xl font-bold tracking-tight group-hover:underline transition-all duration-150">
           {title}
         </h1>
-        <span className="text-gray-400 text-base group-hover:text-gray-600 transition-colors duration-150">
-          (edit)
-        </span>
+        
       </div>
     ) : (
-      <div className="flex flex-row items-center gap-3 mt-2">
+      <div className="flex flex-row w-full  items-center gap-3 mt-2">
         <input
           type="text"
           value={title}
           placeholder="Title"
           onChange={ChangeTitle}
-          className="outline-none h-12 text-4xl font-bold px-4 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 transition-all duration-150 bg-white/90 shadow"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              toggleUpdateTitle();
+            }
+          }}
+          className="outline-none border-0 h-12 w-full text-4xl font-bold px-4 rounded-lg  bg-white/90 "
           autoFocus
         />
-        <button
-          onClick={toggleUpdateTitle}
-          className="rounded-full bg-green-500 hover:bg-green-600 transition-colors duration-150 p-2 flex items-center justify-center shadow-md"
-          title="Save title"
-        >
-          <Check className="w-5 h-5 text-white" />
-        </button>
+      
       </div>
     )}
   <br />
    
-    <TextEditor />
+    <TextEditor 
+      currentNote={currentNote}
+      onContentChange={(content: string) => {
+        if (currentNote) {
+          notesStorage.updateContent(currentNote.id, content);
+          const updatedNote = { ...currentNote, content, updatedAt: new Date() };
+          setCurrentNote(updatedNote);
+          setNotes(prev => prev.map(note => note.id === currentNote.id ? updatedNote : note));
+        }
+      }}
+    />
 
   </div>
-  <BottomBar />
+  <BottomBar onAddNote={handleNewNote} onFavoriteNote={() => {}} onDeleteNote={() => {}} />
 </div>
 </> )
 }

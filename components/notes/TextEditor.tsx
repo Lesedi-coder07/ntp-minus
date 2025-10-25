@@ -1,12 +1,44 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import { useEffect, useRef } from 'react'
 
-const TextEditor = () => {
+interface Note {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface TextEditorProps {
+  currentNote: Note | null;
+  onContentChange: (content: string) => void;
+}
+
+const TextEditor = ({ currentNote, onContentChange }: TextEditorProps) => {
+        const lastNoteIdRef = useRef<string | null>(null);
 
         const editor = useEditor({
           extensions: [StarterKit],
-          content: '<p>Hello World!</p>',
+          content: currentNote?.content?.trim() === '' ? '<p>Start writing...</p>' : (currentNote?.content || '<p>Start writing...</p>'),
+          onUpdate: ({ editor }) => {
+            const html = editor.getHTML();
+            onContentChange(html);
+          },
         })
+
+        // Update editor content when current note changes
+        useEffect(() => {
+          if (editor && currentNote) {
+            // Only update if the note ID has changed (different note selected)
+            if (lastNoteIdRef.current !== currentNote.id) {
+              lastNoteIdRef.current = currentNote.id;
+              // If content is empty, show placeholder, otherwise show the content
+              const content = currentNote.content.trim() === '' ? '<p>Start writing...</p>' : currentNote.content;
+              editor.commands.setContent(content);
+            }
+          }
+        }, [editor, currentNote]);
     return (<div className='h-full'>
           
           {editor && (
