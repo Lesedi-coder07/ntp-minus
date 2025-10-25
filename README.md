@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Note Minus
 
-## Getting Started
+**Note Minus** is a super simplistic, AI-focused note-taking app built by David Rammutla. Designed for speed, clarity, and focus, Note Minus removes all distractions—no sidebars, no task bars, no clutter. Just you and your notes.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Lightning Fast**: Instant load, instant save. No lag, no waiting.
+- **Local-First**: Your notes stay in your browser. No sign-up, no cloud required.
+- **AI-Enhanced**: Smart features to help you write and organize, without getting in your way.
+- **Minimal UI**: No sidebars, no obnoxious toolbars. Just a clean, intuitive space to think and write.
+- **Privacy First**: Your notes never leave your device unless you want them to.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Why Note Minus?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Take notes without ever leaving your browser.
+- Focus on your thoughts, not the interface.
+- Perfect for quick ideas, deep thinking, or anything in between.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Usage
 
-## Learn More
+1. Open the app in your browser.
+2. Start typing. That's it.
+3. Your notes are saved automatically, locally.
 
-To learn more about Next.js, take a look at the following resources:
+## 🧑‍💻 Built With
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- React & Tiptap
+- Tailwind CSS
+- Local storage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Made with ❤️ by David Rammutla
