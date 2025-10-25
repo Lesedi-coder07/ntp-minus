@@ -48,10 +48,7 @@ export default function Home () {
 
  useEffect(()=> {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (  e.key === "v" && (e.metaKey)) {
-        e.preventDefault();
-        toggleUpdateTitle();
-      }
+      
       
       if (e.key === "Enter" && updatingTitle) {
         e.preventDefault();
