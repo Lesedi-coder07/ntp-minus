@@ -1,5 +1,6 @@
 'use client'
 import { Github } from "lucide-react";
+import Image from "next/image";
 
 export default function LandingPage() {
   return (
@@ -45,7 +46,7 @@ export default function LandingPage() {
       </section>
 
       {/* Demo Section */}
-      <section id="demo" className="py-20 px-8 bg-white">
+      <section id="demo" className="py-20 px-8 bg-white rounded-4xl w-screen mx-auto">
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-[#E5E5E5] overflow-hidden">
             <div className="bg-[#F5F5F5] px-6 py-4 border-b border-[#E5E5E5] flex items-center gap-2">
@@ -175,7 +176,7 @@ export default function LandingPage() {
           </p>
           <div className="flex items-center justify-center gap-4">
             <a 
-              href="/home" 
+              href="/app" 
               className="px-8 py-4 bg-[#333333] text-white rounded-xl text-base font-medium hover:bg-[#444444] transition-all shadow-lg"
             >
               Try It Now
@@ -188,7 +189,7 @@ export default function LandingPage() {
             </a>
           </div>
           <p className="text-sm text-[#999999] mt-6">
-            macOS • Windows • Linux coming soon
+            Web • Mobile coming soon
           </p>
         </div>
       </section>
@@ -198,18 +199,13 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between">
             <div className="text-sm text-[#666666]">
-              © 2024 Notepad Minus. Made with ❤️ for writers.
+              © 2024 Notepad Minus. Made with ❤️ by <a href="https://github.com/Lesedi-coder07" className="transition-colors"><Image src="/dave-emoji.jpg" className="rounded-full inline-block" alt="Lesedi" width={20} height={20} /></a> for writers.
             </div>
             <div className="flex items-center gap-6">
               <a href="#" className="text-sm text-[#666666] hover:text-[#333333] transition-colors">
                 GitHub
               </a>
-              <a href="#" className="text-sm text-[#666666] hover:text-[#333333] transition-colors">
-                Twitter
-              </a>
-              <a href="#" className="text-sm text-[#666666] hover:text-[#333333] transition-colors">
-                Discord
-              </a>
+            
             </div>
           </div>
         </div>

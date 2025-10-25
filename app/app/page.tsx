@@ -85,6 +85,13 @@ const handleNewNote = () => {
   setNotes(prev => [...prev, newNote]);
 };
 
+const handleDeleteNote = () => {
+  notesStorage.delete(currentNote?.id || "");
+  setCurrentNote(null);
+  setTitle("");
+  setNotes(prev => prev.filter(note => note.id !== currentNote?.id));
+};
+
    
 
   // Add keyboard shortcut: Alt+S (Windows/Linux) or Option+S (Mac) to open Spotlight
@@ -177,7 +184,7 @@ const handleNewNote = () => {
     />
 
   </div>
-  <BottomBar onAddNote={handleNewNote} onFavoriteNote={() => {}} onDeleteNote={() => {}} />
+  <BottomBar onAddNote={handleNewNote} onFavoriteNote={() => {}} onDeleteNote={() => {handleDeleteNote()}} />
 </div>
 </> )
 }
