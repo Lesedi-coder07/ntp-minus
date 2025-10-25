@@ -36,15 +36,15 @@ export default function Home () {
    loadNotes();
  }, []);
 
- // Update current note when title changes
+ // Update title when user finishes editing
  useEffect(() => {
-   if (currentNote) {
+   if (!updatingTitle && currentNote && currentNote.title !== title) {
      notesStorage.updateTitle(currentNote.id, title);
      const updatedNote = { ...currentNote, title, updatedAt: new Date() };
      setCurrentNote(updatedNote);
      setNotes(prev => prev.map(note => note.id === currentNote.id ? updatedNote : note));
    }
- }, [title, currentNote]);
+ }, [updatingTitle, title, currentNote?.id]);
 
  useEffect(()=> {
     const handleKeyDown = (e: KeyboardEvent) => {

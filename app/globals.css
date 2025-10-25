@@ -60,6 +60,29 @@ body {
   font-style: italic;
 }
 
+.my-tiptap-editor h1,
+.my-tiptap-editor :is(h1),
+.ProseMirror h1 {
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  color: #333333 !important;
+  margin: 1.5em 0 0.75em 0 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.my-tiptap-editor h1:first-child,
+.ProseMirror h1:first-child {
+  margin-top: 0 !important;
+}
+
+/* Override any base styles that might interfere */
+h1 {
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  color: #333333 !important;
+}
+
 .my-tiptap-editor [data-placeholder]:empty:before {
   content: attr(data-placeholder);
   color: #999999;
