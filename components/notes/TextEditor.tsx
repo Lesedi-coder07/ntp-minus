@@ -39,47 +39,36 @@ const TextEditor = ({ currentNote, onContentChange }: TextEditorProps) => {
             }
           }
         }, [editor, currentNote]);
-    return (<div className='h-full'>
-          
+    return (<div className='min-h-[400px]'>
           {editor && (
-  <div className="mb-2 flex gap-2">
+  <div className="mb-6 flex gap-2 opacity-0 hover:opacity-100 transition-opacity duration-200">
     <button
       type="button"
       onClick={() => editor.chain().focus().toggleBold().run()}
-      className={`px-3 py-1 rounded-md border transition-colors duration-150 text-sm font-semibold flex items-center gap-1
-        ${editor.isActive('bold')
-          ? 'bg-amber-400 text-white border-amber-400 shadow font-bold'
-          : 'bg-white text-gray-700 border-gray-300 hover:bg-amber-100 hover:border-amber-300'}
-      `}
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+        editor.isActive('bold')
+          ? 'bg-[#E0F2F7] text-[#333333] border border-[#A7D9ED]'
+          : 'bg-transparent text-[#666666] border border-transparent hover:bg-[#F5F5F5]'
+      }`}
       title="Bold"
     >
-      <strong>B</strong>
+      <strong className="font-semibold">B</strong>
     </button>
     <button
       type="button"
       onClick={() => editor.chain().focus().toggleItalic().run()}
-      className={`px-3 py-1 rounded-md border transition-colors duration-150 text-sm font-semibold flex items-center gap-1
-        ${editor.isActive('italic')
-          ? 'bg-amber-400 text-white border-amber-400 shadow italic'
-          : 'bg-white text-gray-700 border-gray-300 hover:bg-amber-100 hover:border-amber-300'}
-      `}
+      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 ${
+        editor.isActive('italic')
+          ? 'bg-[#E0F2F7] text-[#333333] border border-[#A7D9ED] italic'
+          : 'bg-transparent text-[#666666] border border-transparent hover:bg-[#F5F5F5] italic'
+      }`}
       title="Italic"
     >
-      <span className="italic">I</span>
+      I
     </button>
-  
-
-    {/* <button
-      type="button"
-      onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-      className={editor.isActive('heading', { level: 1 }) ? 'font-bold text-2xl' : ''}
-    >
-      H1
-    </button> */}
-    {/* Add more buttons as needed */}
   </div>
 )}
-          <EditorContent editor={editor} className="w-full  h-[90%] border-none outline-none ml-3 text-neutral-600 my-tiptap-editor"/>
+          <EditorContent editor={editor} className="w-full min-h-[400px] border-none outline-none text-[#666666] text-base leading-relaxed my-tiptap-editor"/>
 
 
     </div>)

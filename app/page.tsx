@@ -96,13 +96,13 @@ const handleNewNote = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Use Ctrl+K (Windows/Linux) or Command+K (Mac) to open Spotlight
+      // Use Ctrl+K (Windows/Linux) or Command+K (Mac) to toggle Spotlight
       if (
         (e.ctrlKey || e.metaKey) && // Ctrl on Windows/Linux, Command on Mac
         e.key.toLowerCase() === "k"
       ) {
         e.preventDefault();
-        setShowSearchModal(true);
+        setShowSearchModal(prev => !prev);
       }
     };
 
@@ -110,19 +110,22 @@ const handleNewNote = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [])
 
-  // Use blue-500/blue-600/blue-300 for a clean, simple look
+
+
   return(
 <> 
-<div className="w-full flex justify-center items-center fixed top-7 left-0 z-40 pointer-events-none">
+<div className="w-full flex justify-center items-center fixed top-5 left-0 z-40 pointer-events-none">
   <button
     onClick={() => setShowSearchModal(true)}
-    className="pointer-events-auto flex items-center gap-2 px-6 py-2 rounded-full  text-black font-semibold transition-all duration-150 "
+    className="pointer-events-auto flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-[#666666] font-medium text-sm shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] transition-all duration-200 border border-transparent hover:border-[#A7D9ED]"
     aria-label="Open search"
-    style={{ minWidth: "140px" }}
   >
-  
-    <span className="hidden sm:inline">⌘ + K </span>  
-   
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="text-[#999999]">
+      <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M15 15l-2.5-2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+    <span className="hidden sm:inline">Search...</span>
+    <span className="text-xs text-[#999999] ml-1">⌘K</span>
   </button>
 </div>
 {showSearchModal && (
@@ -133,22 +136,20 @@ const handleNewNote = () => {
   />
 )}
 
-<div className="flex flex-row justify-center mt-12">
-  
-  <div className="flex-3 text-black max-w-[80%] mt-8 bg-white/80 rounded-xl  p-8 min-h-[120vh] mx-auto transition-all duration-200">
+<div className="flex flex-row justify-center mt-20 pb-20">
+  <div className="w-full max-w-4xl mt-8 px-8 mx-auto">
     {!updatingTitle ? (
       <div
-        className="mt-2 pt-1 cursor-pointer group flex items-center gap-2"
+        className="cursor-pointer group mb-6"
         onClick={toggleUpdateTitle}
         title="Edit title"
       >
-        <h1 className="text-4xl font-bold tracking-tight group-hover:underline transition-all duration-150">
+        <h1 className="text-3xl font-semibold text-[#333333] tracking-tight leading-tight">
           {title}
         </h1>
-        
       </div>
     ) : (
-      <div className="flex flex-row w-full  items-center gap-3 mt-2">
+      <div className="mb-6">
         <input
           type="text"
           value={title}
@@ -160,13 +161,11 @@ const handleNewNote = () => {
               toggleUpdateTitle();
             }
           }}
-          className="outline-none border-0 h-12 w-full text-4xl font-bold px-4 rounded-lg  bg-white/90 "
+          className="outline-none border-0 h-14 w-full text-3xl font-semibold px-1 rounded-lg text-[#333333] tracking-tight leading-tight bg-transparent placeholder:text-[#999999]"
           autoFocus
         />
-      
       </div>
     )}
-  <br />
    
     <TextEditor 
       currentNote={currentNote}

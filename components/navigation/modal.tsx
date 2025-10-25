@@ -19,66 +19,72 @@ export default function SpotlightModal({ notes, onClose, onNoteSelect }: {notes:
 
   // Close on ESC
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handler = (e: KeyboardEvent) => { 
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50">
-      <div className="relative bg-white/90 dark:bg-neutral-900/90 rounded-3xl shadow-2xl border border-neutral-200 dark:border-neutral-700 px-8 py-7 w-full max-w-xl transition-all duration-200">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="relative bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] px-6 py-5 w-full max-w-xl transition-all duration-200">
         {/* Close Button */}
         <button
-          className="absolute top-5 right-5 text-neutral-400 hover:text-blue-500 transition-colors duration-150 p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-300"
+          className="absolute top-4 right-4 text-[#999999] hover:text-[#333333] transition-colors duration-150 p-1.5 rounded-lg hover:bg-[#F5F5F5] focus:outline-none"
           onClick={onClose}
           aria-label="Close search"
         >
-          <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
-            <path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <path d="M6 6l8 8M14 6l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
         </button>
         {/* Search Input */}
-        <div className="flex items-center gap-3 mb-5">
-          <span className="text-blue-400">
-            <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
-              <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="2"/>
-              <path d="M15 15l-2.5-2.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-[#999999]">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+              <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5"/>
+              <path d="M15 15l-2.5-2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
           </span>
           <input
-            className="w-full bg-transparent outline-none text-2xl placeholder:text-neutral-400 font-semibold px-1"
-            placeholder="Search notes…"
+            className="w-full bg-transparent outline-none text-xl placeholder:text-[#999999] font-medium px-1 text-[#333333]"
+            placeholder="Search notes..."
             value={query}
             onChange={e => setQuery(e.target.value)}
             autoFocus
           />
         </div>
         {/* Results List */}
-        <div className="max-h-80 overflow-y-auto custom-scrollbar">
+        <div className="max-h-96 overflow-y-auto">
           {filteredNotes.length === 0 && (
-            <div className="text-neutral-400 text-center py-10 text-lg select-none">
-              <span className="inline-block mb-2">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <div className="text-[#999999] text-center py-12 select-none">
+              <span className="inline-block mb-3">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
                   <path d="M9 10h.01M15 10h.01M9.5 15c1.333.667 2.667.667 4 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </span>
-              <div>No notes found.</div>
+              <div className="text-base font-medium">No notes found</div>
             </div>
           )}
           {filteredNotes.map(note => (
             <div
               key={note.id}
-              className="group p-4 mb-2 rounded-xl bg-white/70 dark:bg-neutral-800/70 border border-transparent hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer transition-all duration-150 shadow-sm"
+              className="group p-3 mb-2 rounded-xl bg-[#F5F5F5] border border-transparent hover:border-[#A7D9ED] hover:bg-[#E0F2F7] cursor-pointer transition-all duration-150 shadow-sm"
               onClick={() => onNoteSelect?.(note)}
               tabIndex={0}
               role="button"
               aria-label={`Select note: ${note.title}`}
             >
-              <div className="font-bold text-lg text-neutral-800 dark:text-neutral-100 group-hover:text-blue-700 truncate">
+              <div className="font-semibold text-base text-[#333333] group-hover:text-[#333333] truncate">
                 {note.title}
               </div>
-             
+              {note.content && (
+                <div className="text-sm text-[#999999] mt-1 line-clamp-1">
+                  {note.content.replace(/<[^>]*>/g, '').substring(0, 60)}
+                </div>
+              )}
             </div>
           ))}
         </div>
