@@ -36,11 +36,17 @@ npm run dev
 
 ### Usage
 
-- **Create a new note**: Click the "+" button in the bottom bar
+- **Create a new note**: Press ⌘N (Mac) or Ctrl+N (Windows/Linux), or click the "+" button in the bottom bar
 - **Search notes**: Press ⌘K (Mac) or Ctrl+K (Windows/Linux)
 - **Edit title**: Click on the note title to edit
 - **Format text**: Use the toolbar buttons for bold, italic, or headings
 - **Switch between notes**: Use the search modal (⌘K) to navigate
+
+### Keyboard Shortcuts
+
+- **⌘N / Ctrl+N**: Create a new note
+- **⌘K / Ctrl+K**: Open search modal to find and navigate notes
+- **Enter** (while editing title): Save title and exit edit mode
 
 ## 🎨 Design Philosophy
 
