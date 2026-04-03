@@ -210,7 +210,7 @@ export default function LandingPage() {
             <div className="grid sm:grid-cols-2 gap-4">
               {[
                 { keys: '⌘ K', action: 'Search notes' },
-                { keys: '⌘ N', action: 'New note' },
+                { keys: '⌘ J', action: 'New note' },
                 { keys: '⌘ .', action: 'Toggle focus mode' },
                 { keys: '⌘ B', action: 'Bold text' },
                 { keys: '⌘ I', action: 'Italic text' },

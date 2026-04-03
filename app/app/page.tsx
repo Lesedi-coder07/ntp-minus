@@ -354,7 +354,7 @@ export default function Home() {
               </p>
               <button
                 onClick={handleNewNote}
-                className="px-6 py-3 rounded-xl bg-[var(--accent)] text-white font-medium text-sm hover:bg-[var(--accent-hover)] transition-all duration-200 btn-micro"
+                className="px-6 py-3 rounded-xl bg-[var(--accent)] text-[var(--background)] font-medium text-sm hover:bg-[var(--accent-hover)] transition-all duration-200 btn-micro"
               >
                 Create your first note
               </button>

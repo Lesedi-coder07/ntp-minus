@@ -8,11 +8,11 @@
   --text-primary: #1a1a2e;
   --text-secondary: #4a4a68;
   --text-muted: #8e8ea0;
-  --accent: #6366f1;
-  --accent-light: #eef2ff;
-  --accent-hover: #4f46e5;
-  --hover-bg: #f0f0ff;
-  --hover-border: #c7d2fe;
+  --accent: #18181b;
+  --accent-light: #f4f4f5;
+  --accent-hover: #09090b;
+  --hover-bg: #f4f4f5;
+  --hover-border: #d4d4d8;
   --border-light: #e5e7eb;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
@@ -32,11 +32,11 @@
   --text-primary: #fafafa;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
-  --accent: #818cf8;
-  --accent-light: #1e1b4b;
-  --accent-hover: #a5b4fc;
-  --hover-bg: rgba(129, 140, 248, 0.1);
-  --hover-border: #3730a3;
+  --accent: #e4e4e7;
+  --accent-light: #27272a;
+  --accent-hover: #fafafa;
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --hover-border: #3f3f46;
   --border-light: #27272a;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
@@ -196,6 +196,15 @@
 .tooltip:hover::before {
   opacity: 1;
   transform: translateX(-50%) scale(1);
+}
+
+.dark .tooltip::after {
+  background: #3f3f46;
+  color: #fafafa;
+}
+
+.dark .tooltip::before {
+  border-top-color: #3f3f46;
 }
 
 body {

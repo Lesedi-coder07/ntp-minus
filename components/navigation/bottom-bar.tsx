@@ -29,7 +29,7 @@ export default function BottomBar({ onAddNote, onFavoriteNote, onDeleteNote }: B
             hover:bg-[var(--hover-bg)] hover:text-[var(--accent)]`}
           aria-label="New note"
           onClick={() => handleClick(onAddNote, 'add')}
-          data-tooltip="New note (⌘N)"
+          data-tooltip="New note (⌘J)"
         >
           <Plus className={`w-5 h-5 transition-colors duration-200
             ${activeButton === 'add' ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}
